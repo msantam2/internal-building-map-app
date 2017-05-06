@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios'; 
-import './App.css';
+import '../stylesheets/App.css';
+import Map from './Map';
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { data: {} }; 
+    this.state = { featureData: {} }; 
   }
   componentDidMount() {
     axios.get("https://building-map-api.herokuapp.com/")
       .then(res => {
-        console.log(res.data);
-        // this.setState({ data: res.data });
+        this.setState({ featureData: res.data });
       })
       .catch(err => {
         console.log(err);
@@ -23,10 +23,10 @@ class App extends Component {
       <div className="app">
         <strong><p className='app-title'>Internal Building Map App</p></strong>
         <p className='app-subtitle'>
-          A React app that fetches data from custom Rails JSON API hosted on Heroku
+          A React app that fetches data from custom-built Rails JSON API hosted on Heroku
         </p>
 
-        
+        <Map featureData={this.state.featureData} dimensions={4} />
       </div>
     );
   }
