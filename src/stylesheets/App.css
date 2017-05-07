@@ -3,10 +3,19 @@
 }
 
 .app-title {
+  margin-top: 10px;
   margin-bottom: 3px;
+  font-size: 26px;
 }
 
 .app-subtitle {
   margin-top: 3px;
-  font-size: 13.5px;
+  font-size: 21px;
+}
+
+.map-container {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 15px;
+  border-bottom: 1px solid white
 }

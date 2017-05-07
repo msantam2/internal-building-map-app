@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios'; 
 import '../stylesheets/App.css';
 import Map from './Map';
-
+import PathSelector from './PathSelector';
+  
 class App extends Component {
   constructor() {
     super();
@@ -26,7 +27,10 @@ class App extends Component {
           A React app that fetches data from custom-built Rails JSON API hosted on Heroku
         </p>
 
-        <Map featureData={this.state.featureData} dimensions={4} />
+        <div className="map-container">
+          <Map featureData={this.state.featureData} dimensions={4} />
+          <PathSelector featureData={this.state.featureData} />
+        </div>
       </div>
     );
   }
