@@ -3,6 +3,13 @@ import '../stylesheets/Map.css';
 import MapUnit from './MapUnit';
 
 class Map extends Component {
+  constructor(props) {
+    super(props);
+    this.renderRows = this.renderRows.bind(this);
+    this.renderMapUnits = this.renderMapUnits.bind(this);
+    this.structureFeatureData = this.structureFeatureData.bind(this);
+  }
+
   render() {
     this.structureFeatureData();
 

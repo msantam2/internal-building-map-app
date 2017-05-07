@@ -9,6 +9,7 @@ class App extends Component {
     super();
     this.state = { featureData: {} }; 
   }
+  
   componentDidMount() {
     axios.get("https://building-map-api.herokuapp.com/")
       .then(res => {
