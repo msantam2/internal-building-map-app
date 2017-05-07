@@ -3,11 +3,23 @@ import axios from 'axios';
 import '../stylesheets/App.css';
 import Map from './Map';
 import PathSelector from './PathSelector';
+import { findPath, findSidesToHighlight } from '../utils/PathUtils';
   
 class App extends Component {
   constructor() {
     super();
-    this.state = { featureData: {} }; 
+    this.state = {
+      featureData: {},
+      startCoord: "",
+      endCoord: "",
+      dimensions: 4
+    }; 
+
+    this.setCoords = this.setCoords.bind(this);
+  }
+
+  setCoords(startCoord, endCoord) {
+    this.setState({ startCoord, endCoord });
   }
   
   componentDidMount() {
@@ -20,7 +32,15 @@ class App extends Component {
       });
   }
   
+  componentWillUpdate(_, nextState) {
+    const { startCoord, endCoord } = nextState; 
+    const path = findPath(startCoord, endCoord );
+
+  }
+
   render() {
+    const { featureData, dimensions } = this.state; 
+    
     return (
       <div className="app">
         <strong><p className='app-title'>Internal Building Map App</p></strong>
@@ -29,8 +49,14 @@ class App extends Component {
         </p>
 
         <div className="map-container">
-          <Map featureData={this.state.featureData} dimensions={4} />
-          <PathSelector featureData={this.state.featureData} />
+          <Map
+            featureData={featureData}
+            dimensions={dimensions}
+          />
+          <PathSelector
+            featureData={featureData}
+            setCoords={this.setCoords}
+          />
         </div>
       </div>
     );

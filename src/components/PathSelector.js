@@ -10,6 +10,7 @@ class PathSelector extends Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
   }
 
@@ -19,7 +20,7 @@ class PathSelector extends Component {
       let startCoord;
       let endCoord;
       startCoord = endCoord = featureData["1"].coordinate.cartesian_point;
-      this.setState({ startCoord: startCoord, endCoord: endCoord });
+      this.setState({ startCoord , endCoord });
     }
   }
 
@@ -39,6 +40,11 @@ class PathSelector extends Component {
       default:
         return;
     }
+  }
+
+  handleClick() {
+    const { startCoord, endCoord } = this.state;
+    this.props.setCoords(startCoord, endCoord);
   }
 
   generateOptions() {
@@ -77,7 +83,11 @@ class PathSelector extends Component {
             </select>
           </div>
 
-          <a href="#" className="button">Get From Point A to Point B</a>
+          <a href="#"
+            className="button"
+            onClick={this.handleClick}>
+            Get From Point A to Point B
+          </a>
         </div>  
       </div>
     );
