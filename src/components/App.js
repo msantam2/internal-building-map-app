@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../stylesheets/App.css';
 import Map from './Map';
 import PathSelector from './PathSelector';
-import { findPath, findSidesToHighlight } from '../utils/PathUtils';
+import { findStepsOfPath, findSidesToHighlight } from '../utils/PathUtils';
   
 class App extends Component {
   constructor() {
@@ -16,6 +16,7 @@ class App extends Component {
     }; 
 
     this.setCoords = this.setCoords.bind(this);
+    this.findPath = this.findPath.bind(this);
   }
 
   setCoords(startCoord, endCoord) {
@@ -25,21 +26,24 @@ class App extends Component {
   componentDidMount() {
     axios.get("https://building-map-api.herokuapp.com/")
       .then(res => {
-        this.setState({ featureData: res.data });
+        const featureData = res.data; 
+        this.setState({
+          featureData: featureData,
+          startCoord: featureData["1"].coordinate.cartesian_point,
+          endCoord: featureData["1"].coordinate.cartesian_point
+        });
       })
       .catch(err => {
         console.log(err);
       });
   }
   
-  componentWillUpdate(_, nextState) {
-    const { startCoord, endCoord } = nextState; 
-    const path = findPath(startCoord, endCoord );
-
+  findPath(startCoord, endCoord) {
+    const path = findStepsOfPath(startCoord, endCoord);
   }
 
   render() {
-    const { featureData, dimensions } = this.state; 
+    const { featureData, startCoord, endCoord, dimensions } = this.state; 
     
     return (
       <div className="app">
@@ -55,7 +59,10 @@ class App extends Component {
           />
           <PathSelector
             featureData={featureData}
+            startCoord={startCoord}
+            endCoord={endCoord}
             setCoords={this.setCoords}
+            findPath={this.findPath}
           />
         </div>
       </div>

@@ -4,47 +4,24 @@ import '../stylesheets/PathSelector.css';
 class PathSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      startCoord: "",
-      endCoord: ""
-    };
-    
+
+    this.setValue = this.setValue.bind(this);
+    this.generateOptions = this.generateOptions.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.generateOptions = this.generateOptions.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
-      const { featureData } = nextProps; 
-      let startCoord;
-      let endCoord;
-      startCoord = endCoord = featureData["1"].coordinate.cartesian_point;
-      this.setState({ startCoord , endCoord });
-    }
-  }
-
-  handleChange(pathTerminus, event) {
-    const coordinate = event.target.value; 
-    let newState = Object.assign({}, this.state);
-
+  
+  setValue(pathTerminus) {
     switch (pathTerminus) {
       case "start":
-        newState["startCoord"] = coordinate;
-        this.setState(newState);
-        break;
+        const { startCoord } = this.props;
+        return startCoord; 
       case "end":
-        newState["endCoord"] = coordinate;
-        this.setState(newState);
-        break;
+        const { endCoord } = this.props;
+        return endCoord; 
       default:
-        return;
+        return;  
     }
-  }
-
-  handleClick() {
-    const { startCoord, endCoord } = this.state;
-    this.props.setCoords(startCoord, endCoord);
   }
 
   generateOptions() {
@@ -62,7 +39,30 @@ class PathSelector extends Component {
 
     return options; 
   }
-  
+
+  handleChange(pathTerminus, event) {
+    const coordinate = event.target.value; 
+    const { setCoords } = this.props;
+
+    switch (pathTerminus) {
+      case "start":
+        const { endCoord } = this.props;
+        setCoords(coordinate, endCoord);
+        break;
+      case "end":
+        const { startCoord } = this.props; 
+        setCoords(startCoord, coordinate);
+        break;
+      default:
+        return;
+    }
+  }
+
+  handleClick() {
+    const { startCoord, endCoord, findPath } = this.props; 
+    findPath(startCoord, endCoord);
+  }
+
   render() {
     return (
       <div className="path-selector-container">
@@ -70,6 +70,7 @@ class PathSelector extends Component {
           <div className="start-item">
             <span className="label">Start: </span>
             <select className="dropdown"
+              value={this.setValue("start")}  
               onChange={this.handleChange.bind(null, "start")}>
               {this.generateOptions()}
             </select>
@@ -78,6 +79,7 @@ class PathSelector extends Component {
           <div className="end-item">
             <span className="label">End: </span>
             <select className="dropdown"
+              value={this.setValue("end")}  
               onChange={this.handleChange.bind(null, "end")}>
               {this.generateOptions()}
             </select>
