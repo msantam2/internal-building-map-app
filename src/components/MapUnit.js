@@ -1,10 +1,9 @@
 import React from 'react';
 import '../stylesheets/MapUnit.css';
 
-const MapUnit = ({ cartesianPoint, name, sideToHighlight }) => {
-  let style; 
+const MapUnit = ({ name, style }) => {
   if (name) {
-    style = { "backgroundColor": "orange" };
+    style["backgroundColor"] = "orange";
   }
   
   return (

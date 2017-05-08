@@ -4,7 +4,7 @@ import '../stylesheets/App.css';
 import Map from './Map';
 import PathSelector from './PathSelector';
 import { findStepsOfPath, findSidesToHighlight } from '../utils/PathUtils';
-  
+
 class App extends Component {
   constructor() {
     super();
@@ -12,7 +12,8 @@ class App extends Component {
       featureData: {},
       startCoord: "",
       endCoord: "",
-      dimensions: 4
+      dimensions: 4,
+      sidesToHighlight: {}
     }; 
 
     this.setCoords = this.setCoords.bind(this);
@@ -41,11 +42,19 @@ class App extends Component {
   findPath(startCoord, endCoord) {
     const { dimensions } = this.state;
     const path = findStepsOfPath(startCoord, endCoord, dimensions);
-    console.log(path);
+    const sidesToHighlight = findSidesToHighlight(path);
+    // {[1, -1]: { "borderLeft": "1px solid red", "borderBottom": "1px ..."}};
+    this.setState({ sidesToHighlight });
   }
 
   render() {
-    const { featureData, startCoord, endCoord, dimensions } = this.state; 
+    const {
+      featureData,
+      startCoord,
+      endCoord,
+      dimensions,
+      sidesToHighlight
+     } = this.state; 
     
     return (
       <div className="app">
@@ -58,6 +67,7 @@ class App extends Component {
           <Map
             featureData={featureData}
             dimensions={dimensions}
+            sidesToHighlight={sidesToHighlight}
           />
           <PathSelector
             featureData={featureData}

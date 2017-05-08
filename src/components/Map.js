@@ -40,7 +40,7 @@ class Map extends Component {
   }
 
   renderMapUnits(yCoord) {
-    const { dimensions } = this.props;
+    const { dimensions, sidesToHighlight } = this.props;
     let xCoords = [];
     for (let i = 0; i < dimensions; i++) {
       xCoords.push(i);
@@ -49,14 +49,13 @@ class Map extends Component {
     return xCoords.map(xCoord => {
       const cartesianPoint = `(${xCoord}, ${yCoord})`;
       const name = this.FEATURES[cartesianPoint];
-      const sideToHighlight = null; 
-
+      const style = sidesToHighlight[[xCoord, yCoord]] || {};
+      
       return (
         <MapUnit
-          key={cartesianPoint}  
-          cartesianPoint={cartesianPoint}
+          key={cartesianPoint}
           name={name}
-          sideToHighlight={sideToHighlight}
+          style={style}
         />
       );
     });
