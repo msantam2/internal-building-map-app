@@ -15,7 +15,7 @@ const Extras = () => {
   ];
   
   const futureFeatures = [
-    "Dashboard with details analytics!",
+    "Dashboard with detailed analytics!",
     "Allow visibility into office vacancies for more efficient staff placement",
     "Show a sped-up walk-through in Augmented Reality, with landmarks",
     "Use this app to completely change the world."
