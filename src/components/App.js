@@ -39,7 +39,9 @@ class App extends Component {
   }
   
   findPath(startCoord, endCoord) {
-    const path = findStepsOfPath(startCoord, endCoord);
+    const { dimensions } = this.state;
+    const path = findStepsOfPath(startCoord, endCoord, dimensions);
+    console.log(path);
   }
 
   render() {
