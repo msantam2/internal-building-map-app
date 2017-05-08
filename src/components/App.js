@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../stylesheets/App.css';
 import Map from './Map';
 import PathSelector from './PathSelector';
+import Extras from './Extras';
 import { findStepsOfPath, findSidesToHighlight } from '../utils/PathUtils';
 
 class App extends Component {
@@ -77,6 +78,8 @@ class App extends Component {
             findPath={this.findPath}
           />
         </div>
+
+        <Extras />
       </div>
     );
   }
